@@ -241,7 +241,7 @@ INSERT INTO @FailedEmailReasons VALUES
 -- Date-range helpers: Spread the generated [Communications] across the available date range.
 DECLARE @TimeSpanSeconds BIGINT = DATEDIFF(SECOND, @StartDate, @EndDate);
 DECLARE @BaseIncrementSeconds INT = CASE
-    WHEN @CommCount = 0 THEN 1
+    WHEN @CommCount <= 0 THEN 1
     ELSE @TimeSpanSeconds / @CommCount
 END;
 
@@ -1009,7 +1009,7 @@ BEGIN
             GOTO NextRecipient;
         END
 
-        SET @ClickCount = 1 + ABS(CHECKSUM(NEWID())) % 4; -- 1–4 clicks
+        SET @ClickCount = 1 + ABS(CHECKSUM(NEWID())) % 4; -- 1Â–4 clicks
         SET @ClickIndex = 0;
 
         -- 50% chance to repeat the same link for all clicks
