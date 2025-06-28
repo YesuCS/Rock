@@ -53,7 +53,7 @@ namespace Rock.Lava
                 _cacheService.Initialize( this.GetType().Name );
             }
 
-            _defaultEnabledCommands = options.DefaultEnabledCommands;
+            _defaultEnabledCommands = options.DefaultEnabledCommands ?? new List<string>();
 
             if ( options.ExceptionHandlingStrategy != null )
             {
@@ -815,7 +815,7 @@ namespace Rock.Lava
                 throw new ArgumentException( "Name must be specified." );
             }
 
-            name = name.Trim().ToLower();
+            name = name?.Trim().ToLowerInvariant();
 
             var blockInstance = factoryMethod( name );
 
